@@ -9,7 +9,6 @@ from guizero import *
 import random
 import sys
 
-game_start = False #Determines if the game has started
 player_cards = 0 #Determines how many cards the player has drawn
 house_cards = 0 #Determines how many cards the house has drawn
 player_lis = ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11"] #Variables for player cards
@@ -28,14 +27,14 @@ user_turn = True #States that it is the user turn on start
 
 '''
 Function: resetGame()
-Global Variables: score, house_score, card, card_suit, card_number, user_turn, game_start
+Global Variables: score, house_score, card, card_suit, card_number, user_turn
 
 This function is used to reset the game when somebody would like to play again,
 when they choose to rest the game. This will reset all the variables, reset all
 the images, and the globals() variable.
 '''
 def resetGame():
-    global score, house_score, card, card_suit, card_number, user_turn, game_start
+    global score, house_score, card, card_suit, card_number, user_turn
 
     score = 0
     house_score = 0
@@ -60,7 +59,9 @@ def resetGame():
     player_total.value = "Your score: " + str(score)
     house_total.value = "House score: " + str(house_score)
 
-    game_start = False
+    start_button.enable()
+    hit_button.disable()
+    stay_button.disable()
 
 '''
 Function: checkLoss()
@@ -171,102 +172,101 @@ def drawCard():
 '''
 Function: hit()
 Sub Functions: drawCard(), addScore()
-Global Variables: player_cards, game_start, cards_drawn, card_suit, card
+Global Variables: player_cards, cards_drawn, card_suit, card
 
 This function is used to draw another card for the user. This is if the user would like
 to add another card to their score, and it will be updated dynamically as well.
 '''
 def hit():
-    global player_cards, game_start, cards_drawn, card_suit, card
+    global player_cards, cards_drawn, card_suit, card
 
-    if(game_start):
-        if cards_drawn >= 52:
-            used.clear()
-            cards_drawn = 0
+    if cards_drawn >= 52:
+        used.clear()
+        cards_drawn = 0
 
-        cards_drawn += 1
-        drawCard()
-        img_path = "images/" + card_suit + "/" + card + ".png"
-        globals()[player_lis[player_cards]] = Picture(player_box, image = img_path, align = "left")
-        player_cards += 1
-        addScore()
+    cards_drawn += 1
+    drawCard()
+    img_path = "images/" + card_suit + "/" + card + ".png"
+    globals()[player_lis[player_cards]] = Picture(player_box, image = img_path, align = "left")
+    player_cards += 1
+    addScore()
 
 '''
 Function: stay()
 Sub Functions: drawCard(), addScore()
-Global Variables: game_start, house_cards, cards_drawn, user_turn, card_suit, card
+Global Variables: house_cards, cards_drawn, user_turn, card_suit, card
 
 This function is used to wait for the house to draw. Cards will be drawn for the house,
 card pictures will be updated, and house score will be updated.
 '''
 def stay():
-    global game_start, house_cards, cards_drawn, user_turn, card_suit, card
+    global house_cards, cards_drawn, user_turn, card_suit, card
 
-    if(game_start):
-        if cards_drawn >= 52:
-            used.clear()
-            cards_drawn = 0
+    if cards_drawn >= 52:
+        used.clear()
+        cards_drawn = 0
 
-        cards_drawn += 1
-        user_turn = False
+    cards_drawn += 1
+    user_turn = False
 
-        while not user_turn:
-            drawCard()
-            if house_cards == 0:
-                img_path = "images/" + card_suit + "/" + card + ".png"
-                house_pic.image = img_path
-                house_cards += 1
+    while not user_turn:
+        drawCard()
+        if house_cards == 0:
+            img_path = "images/" + card_suit + "/" + card + ".png"
+            house_pic.image = img_path
+            house_cards += 1
 
-            else:
-                img_path = "images/" + card_suit + "/" + card + ".png"
-                globals()[house_lis[house_cards]] = Picture(house_box, image = img_path, align = "left")
-                house_cards += 1
+        else:
+            img_path = "images/" + card_suit + "/" + card + ".png"
+            globals()[house_lis[house_cards]] = Picture(house_box, image = img_path, align = "left")
+            house_cards += 1
 
-            addScore()
+        addScore()
 
 '''
 Function: startGame()
 Sub Functions: drawCard(), addScore(0)
-Global Variables: player_cards, house_cards, game_start, cards_drawn, card_suit, card
+Global Variables: player_cards, house_cards, cards_drawn, card_suit, card
 
-This will activate the game_start variable, and draw the first 2 cards for the
-player. This will also update the photos shown on the screen to reflect the card
-that has been chosen. This will also update each appropriate score for the user
-and the house.
+This will draw the first 2 cards for the player. This will also update the photos
+shown on the screen to reflect the card that has been chosen. This will also update
+each appropriate score for the user and the house.
 '''
 def startGame():
-    global player_cards, house_cards, game_start, cards_drawn, card_suit, card
+    global player_cards, house_cards, cards_drawn, card_suit, card
 
     player_cards = 0
     house_cards = 0
 
-    if not game_start:
-        game_start = True
-        if cards_drawn >= 51:
-            used.clear()
-            cards_drawn = 0
+    start_button.disable()
+    hit_button.enable()
+    stay_button.enable()
 
-        cards_drawn += 2
+    if cards_drawn >= 50:
+        used.clear()
+        cards_drawn = 0
 
-        #Draw first card for player
-        drawCard()
-        img_path = "images/" + card_suit + "/" + card + ".png"
-        player_pic.image = img_path
-        player_cards += 1
-        addScore()
+    cards_drawn += 2
 
-        #Draw second card for player
-        drawCard()
-        img_path = "images/" + card_suit + "/" + card + ".png"
-        globals()[player_lis[player_cards]] = Picture(player_box, image = img_path, align = "left")
-        player_cards += 1
-        addScore()
+    #Draw first card for player
+    drawCard()
+    img_path = "images/" + card_suit + "/" + card + ".png"
+    player_pic.image = img_path
+    player_cards += 1
+    addScore()
+
+    #Draw second card for player
+    drawCard()
+    img_path = "images/" + card_suit + "/" + card + ".png"
+    globals()[player_lis[player_cards]] = Picture(player_box, image = img_path, align = "left")
+    player_cards += 1
+    addScore()
 
 '''
 This next section is setup for the GUI, as each element will be directly under each other
 This also includes the appropriate boxes for the
 '''
-app = App(title="Hello World", width = 1000, height = 1000)
+app = App(title="Blackjack 21", width = 1000, height = 1000)
 
 #The welcoming message to the game
 welcome_message = Text(app, "Welcome to Blackjack!", size = 40, color = "lightblue", font = "Times New Roman")
@@ -282,7 +282,7 @@ total = "Your score: " + str(score)
 player_total = Text(player_box, total, align = "right")
 
 #Simply holds the stack picture
-blank_pic = Picture(app, image = "images/stack_resized.jpg", align = "top")
+stack_pic = Picture(app, image = "images/stack_resized.jpg", align = "top")
 
 #Where house cards and score is displayed
 house_box = Box(app)
@@ -292,8 +292,8 @@ house_total = Text(house_box, total_2, align = "right")
 
 #Buttons to play the game
 start_button = PushButton(app, command = startGame, text = "Start!", width = 30, pady = 20)
-hit_button = PushButton(app, command = hit, text = "Hit!", width = 30, pady = 20)
-stay_button = PushButton(app, command = stay, text = "Stay!", width = 30, pady = 20)
+hit_button = PushButton(app, command = hit, text = "Hit!", width = 30, pady = 20, enabled = False)
+stay_button = PushButton(app, command = stay, text = "Stay!", width = 30, pady = 20, enabled = False)
 
 #Start the game
 app.display()
