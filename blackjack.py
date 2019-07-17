@@ -135,8 +135,7 @@ def addScore():
     elif "ace" in card:
         points = 1
     else:
-        number = int(card_number)
-        points = number
+        points = int(card_number)
 
     if user_turn:
         score += points
