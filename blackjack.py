@@ -165,8 +165,7 @@ def drawCard():
         card = card_suit + "_" + card_number
         if card not in used:
             unique = True
-
-    used.append(card)
+            used.append(card)
 
 '''
 Function: hit()
