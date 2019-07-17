@@ -43,8 +43,8 @@ def resetGame():
     card_number = ""
     user_turn = True
 
-    player_pic.image = "images/blank_resize.jpg"
-    house_pic.image = "images/blank_resize.jpg"
+    player_pic.image = "images/blank_resize.png"
+    house_pic.image = "images/blank_resize.png"
 
     for x in range(1, player_cards):
         globals()[player_lis[x]].destroy()
@@ -180,7 +180,7 @@ to add another card to their score, and it will be updated dynamically as well.
 def hit():
     global player_cards, cards_drawn, card_suit, card
 
-    if cards_drawn >= 52:
+    if cards_drawn >= 51:
         used.clear()
         cards_drawn = 0
 
@@ -202,7 +202,7 @@ card pictures will be updated, and house score will be updated.
 def stay():
     global house_cards, cards_drawn, user_turn, card_suit, card
 
-    if cards_drawn >= 52:
+    if cards_drawn >= 48:
         used.clear()
         cards_drawn = 0
 
@@ -277,16 +277,16 @@ start_text = Text(app, "Click 'start' to start the game")
 
 #Where player cards and score is displayed
 player_box = Box(app)
-player_pic = Picture(player_box, image = "images/blank_resize.jpg", align = "left")
+player_pic = Picture(player_box, image = "images/blank_resize.png", align = "left")
 total = "Your score: " + str(score)
 player_total = Text(player_box, total, align = "right")
 
 #Simply holds the stack picture
-stack_pic = Picture(app, image = "images/stack_resized.jpg", align = "top")
+stack_pic = Picture(app, image = "images/stack_resized.png", align = "top")
 
 #Where house cards and score is displayed
 house_box = Box(app)
-house_pic = Picture(house_box, image = "images/blank_resize.jpg", align = "left")
+house_pic = Picture(house_box, image = "images/blank_resize.png", align = "left")
 total_2 = "House score: " + str(house_score)
 house_total = Text(house_box, total_2, align = "right")
 
