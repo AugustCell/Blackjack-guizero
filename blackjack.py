@@ -10,11 +10,8 @@ import random
 import sys
 
 class Player:
-<<<<<<< HEAD
-=======
     playerScore = 0
 
->>>>>>> 70b12ea8a16e6a28e40e494ebebf7e3ab3dbf92b
     def __init__(self):
         self.cards = []
         self.playerScore = 0
@@ -67,11 +64,8 @@ class Player:
         self.playerScore = 0
 
 class Computer:
-<<<<<<< HEAD
-=======
     computerScore = 0
 
->>>>>>> 70b12ea8a16e6a28e40e494ebebf7e3ab3dbf92b
     def __init__(self):
         self.cards = []
         self.computerScore = 0
@@ -155,20 +149,14 @@ class Deck:
 
     def __init__(self):
         self.cards = []
-<<<<<<< HEAD
         self.reshuffle()
 
     def reshuffle(self):
-=======
->>>>>>> 70b12ea8a16e6a28e40e494ebebf7e3ab3dbf92b
         self.restart()
         self.shuffle()
 
     def restart(self):
-<<<<<<< HEAD
         self.cards = []
-=======
->>>>>>> 70b12ea8a16e6a28e40e494ebebf7e3ab3dbf92b
         for i in range(len(self.card_face)):
             for j in range(len(self.card_suit)):
                 self.cards.append(self.card_face[i] + " of " + self.card_suit[j])
@@ -178,12 +166,9 @@ class Deck:
 
     def draw_card(self):
         if not len(self.cards):
-<<<<<<< HEAD
             self.reshuffle()
-=======
             self.restart()
             self.shuffle()
->>>>>>> 70b12ea8a16e6a28e40e494ebebf7e3ab3dbf92b
 
         return self.cards.pop()
 
